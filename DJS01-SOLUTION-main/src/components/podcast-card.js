@@ -10,3 +10,13 @@ class PodcastCard extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
   }
+
+  // Allow setting a full podcast object as a property
+  set podcast(data) {
+    this._podcast = data;
+    this.render();
+  }
+
+  get podcast() {
+    return this._podcast;
+  }
