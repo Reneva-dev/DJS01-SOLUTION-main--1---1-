@@ -5,3 +5,8 @@ class PodcastCard extends HTMLElement {
   static get observedAttributes() {
     return ["title", "image", "seasons", "genres", "updated"];
   }
+
+    constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
