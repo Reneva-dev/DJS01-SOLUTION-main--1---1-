@@ -13,8 +13,8 @@ function init() {
   document
     .getElementById("closeModal")
     .addEventListener("click", createModal.close);
-  const grid = createGrid();
-  grid.render(podcasts);
+  //const grid = createGrid();
+  //grid.render(podcasts);
 }
 
 init();
