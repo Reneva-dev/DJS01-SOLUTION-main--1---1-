@@ -20,3 +20,13 @@ class PodcastCard extends HTMLElement {
   get podcast() {
     return this._podcast;
   }
+
+   // React to attribute changes
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
+    }
+  }
+
+  connectedCallback() {
+    this.render();
