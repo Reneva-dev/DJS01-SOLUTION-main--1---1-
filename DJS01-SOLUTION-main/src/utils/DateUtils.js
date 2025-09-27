@@ -1,13 +1,30 @@
 /**
- * Date Formatter - Utility function for date formatting.
+ * @fileoverview Utility for formatting dates into human-readable strings.
  *
- * @principle SRP - Single Responsibility Principle: This module only formats dates and does not handle any unrelated logic.
+ * Wraps JavaScript's native Date API to standardize how update timestamps
+ * are displayed throughout the application.
+ *
+ * @principle SRP - Single Responsibility Principle: Only formats dates,
+ * without handling unrelated logic.
+ */
+
+/**
+ * DateUtils — collection of date formatting utilities.
+ *
+ * @namespace DateUtils
  */
 export const DateUtils = {
   /**
-   * Formats a date string into a human-readable format.
-   * @param {string} dateStr - ISO date string.
-   * @returns {string} Formatted date string.
+   * Formats an ISO date string into a localized human-readable string.
+   *
+   * @function format
+   * @memberof DateUtils
+   * @param {string} dateStr - ISO 8601 date string (e.g., "2025-09-26").
+   * @returns {string} Formatted date string (e.g., "Updated September 26, 2025").
+   *
+   * @example
+   * // returns "Updated September 26, 2025"
+   * DateUtils.format("2025-09-26");
    */
   format(dateStr) {
     const date = new Date(dateStr);
