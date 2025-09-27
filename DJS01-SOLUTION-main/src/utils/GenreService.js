@@ -1,15 +1,31 @@
 import { genres } from "../data.js";
 
 /**
- * Service to retrieve genre titles from genre IDs.
+ * @fileoverview Utility service for resolving genre IDs into human-readable names.
  *
- * @principle SRP - Single Responsibility Principle: Only responsible for mapping genre IDs to names.
+ * Delegates lookup to the `genres` dataset imported from data.js.
+ *
+ * @principle SRP - Single Responsibility Principle: Only responsible for mapping
+ * genre IDs to genre titles.
+ */
+
+/**
+ * GenreService — maps numeric genre IDs to their corresponding titles.
+ *
+ * @namespace GenreService
  */
 export const GenreService = {
   /**
    * Resolves an array of genre IDs into an array of genre titles.
+   *
+   * @function getNames
+   * @memberof GenreService
    * @param {number[]} genreIds - Array of genre IDs.
-   * @returns {string[]} Array of genre titles.
+   * @returns {string[]} Array of resolved genre titles. Unknown IDs return `"Unknown"`.
+   *
+   * @example
+   * // returns ["Technology", "Education"]
+   * GenreService.getNames([1, 2]);
    */
   getNames(genreIds) {
     return genreIds.map(
@@ -17,3 +33,4 @@ export const GenreService = {
     );
   },
 };
+
