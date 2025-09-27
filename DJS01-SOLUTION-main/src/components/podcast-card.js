@@ -1,36 +1,86 @@
 import { GenreService } from "../utils/GenreService.js";
 import { DateUtils } from "../utils/DateUtils.js";
 
+/**
+ * @fileoverview Defines the <podcast-card> custom element.
+ *
+ * Displays a podcast preview with cover image, title, seasons, genres, and
+ * last updated date. Can be populated either via attributes or by assigning
+ * a `podcast` object property.
+ *
+ * Dependencies:
+ * - GenreService (maps genre IDs to human-readable names)
+ * - DateUtils (formats ISO date strings)
+ */
+
+/**
+ * PodcastCard component — custom HTML element.
+ *
+ * @element podcast-card
+ *
+ * @property {Object} podcast - Full podcast data object.
+ * @property {string} podcast.title - The podcast title.
+ * @property {string} podcast.image - URL for the cover image.
+ * @property {number} podcast.seasons - Number of seasons.
+ * @property {number[]} podcast.genres - Array of genre IDs.
+ * @property {string} podcast.updated - ISO date string of the last update.
+ *
+ * @fires podcast-selected - Emitted when the card is clicked. The event detail
+ * contains the full podcast object if available, otherwise the podcast title string.
+ */
 class PodcastCard extends HTMLElement {
+  /**
+   * Attributes observed for changes.
+   * @returns {string[]} List of attribute names to observe.
+   */
   static get observedAttributes() {
     return ["title", "image", "seasons", "genres", "updated"];
   }
 
-    constructor() {
+  constructor() {
     super();
     this.attachShadow({ mode: "open" });
   }
 
-  // Allow setting a full podcast object as a property
+  /**
+   * Sets the podcast data and triggers a re-render.
+   * @param {Object} data - Podcast object.
+   * @param {string} data.title
+   * @param {string} data.image
+   * @param {number} data.seasons
+   * @param {number[]} data.genres
+   * @param {string} data.updated
+   */
   set podcast(data) {
     this._podcast = data;
     this.render();
   }
 
+  /** @returns {Object} Podcast data object */
   get podcast() {
     return this._podcast;
   }
 
-   // React to attribute changes
+  /**
+   * Reacts to observed attribute changes by re-rendering.
+   * @param {string} name - Attribute name.
+   * @param {string|null} oldValue - Previous value.
+   * @param {string|null} newValue - New value.
+   * @returns {void}
+   */
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render();
     }
   }
 
+  /**
+   * Lifecycle hook called when the element is inserted into the DOM.
+   * Attaches a click listener that dispatches `podcast-selected`.
+   * @returns {void}
+   */
   connectedCallback() {
     this.render();
-    // Dispatch event when user clicks the card
     this.shadowRoot.addEventListener("click", () => {
       this.dispatchEvent(
         new CustomEvent("podcast-selected", {
@@ -42,6 +92,11 @@ class PodcastCard extends HTMLElement {
     });
   }
 
+  /**
+   * Renders the podcast card into the shadow DOM.
+   * Pulls data from either the `podcast` property or element attributes.
+   * @returns {void}
+   */
   render() {
     const title = this._podcast?.title || this.getAttribute("title") || "";
     const image = this._podcast?.image || this.getAttribute("image") || "";
@@ -107,7 +162,6 @@ class PodcastCard extends HTMLElement {
     `;
   }
 }
-
 
 // Register the custom element
 customElements.define("podcast-card", PodcastCard);
